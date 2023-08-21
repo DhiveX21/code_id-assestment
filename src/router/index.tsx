@@ -7,6 +7,7 @@ import LoadingComponent from "../components/loading";
 const UserPage = lazy(() => import("../pages"));
 const UserDetailPage = lazy(() => import("../pages/user/userDetail"));
 const PostDetailPage = lazy(() => import("../pages/post/postDetail"));
+const AlbumDetailPage = lazy(() => import("../pages/album/albumDetail"));
 
 const router = createBrowserRouter([
   {
@@ -32,6 +33,15 @@ const router = createBrowserRouter([
     element: (
       <Suspense fallback={<LoadingComponent />}>
         <PostDetailPage />
+      </Suspense>
+    ),
+    errorElement: <ErrorPage />,
+  },
+  {
+    path: "/user/:userId/album/:albumId",
+    element: (
+      <Suspense fallback={<LoadingComponent />}>
+        <AlbumDetailPage />
       </Suspense>
     ),
     errorElement: <ErrorPage />,
