@@ -11,4 +11,5 @@ export interface IUserService {
   deletePostByIdService: (postId: number) => Promise<IPost | null>;
   createPostService: (payload: ICreatePostPayload) => Promise<IPost | null>;
   updatePostService: (payload: IUpdatePostPayload) => Promise<IPost | null>;
+  deleteCommentByIdService: (commentId: number) => Promise<IComment | null>;
 }

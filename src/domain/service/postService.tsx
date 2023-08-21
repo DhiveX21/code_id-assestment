@@ -3,7 +3,9 @@ import { IPost } from "../../_types/posts.type";
 import postRepository from "../repository/postRepository";
 import { IComment } from "../../_types/comments.type";
 import {
+  ICreateCommentPayload,
   ICreatePostPayload,
+  IUpdateCommentPayload,
   IUpdatePostPayload,
 } from "../../_types/payload.type";
 
@@ -53,6 +55,39 @@ const postService = {
   ): Promise<IPost | null> => {
     try {
       const res = await postRepository.updatePostRepository(payload);
+      return res;
+    } catch (error) {
+      toast.error(String(error));
+      return null;
+    }
+  },
+  deleteCommentByIdService: async (
+    commentId: number
+  ): Promise<IComment | null> => {
+    try {
+      const res = await postRepository.deleteCommentByIdRepository(commentId);
+      return res;
+    } catch (error) {
+      toast.error(String(error));
+      return null;
+    }
+  },
+  createCommentService: async (
+    payload: ICreateCommentPayload
+  ): Promise<IComment | null> => {
+    try {
+      const res = await postRepository.createCommentRepository(payload);
+      return res;
+    } catch (error) {
+      toast.error(String(error));
+      return null;
+    }
+  },
+  updateCommentService: async (
+    payload: IUpdateCommentPayload
+  ): Promise<IComment | null> => {
+    try {
+      const res = await postRepository.updateCommentRepository(payload);
       return res;
     } catch (error) {
       toast.error(String(error));

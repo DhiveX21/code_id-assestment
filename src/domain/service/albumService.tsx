@@ -12,6 +12,15 @@ const albumService = {
       return null;
     }
   },
+  getDetailPhotoService: async (photoId: number): Promise<IPhoto | null> => {
+    try {
+      const res = await albumRepository.getDetailPhotoRepository(photoId);
+      return res;
+    } catch (error) {
+      toast.error(String(error));
+      return null;
+    }
+  },
   getAllPhotoByAlbumIdService: async (
     albumId: number
   ): Promise<IPhoto[] | null> => {

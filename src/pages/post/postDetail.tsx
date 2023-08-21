@@ -1,16 +1,26 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import usePostDetail from "../../_hooks/usePostDetail";
 import { IComment } from "../../_types/comments.type";
-// import useUserDetail from "../../_hooks/useUserDetail";
-// import { IPost } from "../../_types/posts.type";
-// import { Link } from "react-router-dom";
-// import { IAlbum } from "../../_types/albums.type";
+import AddCommentModal from "../../components/comments/addCommentModal";
+import EditCommentModal from "../../components/comments/editCommentModal";
 
 const PostDetailPage = () => {
-  const { postId } = useParams();
-  const { getDetailPost, postData, getCommentPost, commentData } =
-    usePostDetail();
+  const [showAddModal, setShowAddModal] = useState(false);
+  const [showEditModal, setShowEditModal] = useState(false);
+  const [selectedEditItem, setSelectedEditItem] = useState<IComment | null>(
+    null
+  );
+  const { postId, userId } = useParams();
+  const {
+    getDetailPost,
+    postData,
+    getCommentPost,
+    commentData,
+    handleDeleteComment,
+    handleCreateComment,
+    handleUpdateComment,
+  } = usePostDetail();
 
   useEffect(() => {
     if (postId) {
@@ -50,7 +60,7 @@ const PostDetailPage = () => {
                 </div>
               </div>
               {commentData?.map((comment: IComment) => (
-                <div className="w-full border-t-2 py-2 border-gray-100">
+                <div className="relative w-full border-t-2 py-2 border-gray-100">
                   <div className="text-slate-600 font-bold text-sm">
                     <p>{comment.email}</p>
                   </div>
@@ -60,12 +70,61 @@ const PostDetailPage = () => {
                   <div className="text-xs text-gray-400">
                     <p>{comment.body}</p>
                   </div>
+                  <div className="absolute right-2 top-2 flex gap-2">
+                    <button
+                      onClick={() => {
+                        setShowEditModal(true);
+                        setSelectedEditItem(comment);
+                      }}
+                      className=" rounded-[15px] text-xs bg-yellow-400 text-white font-bold"
+                    >
+                      Edit
+                    </button>
+                    <button
+                      onClick={() => {
+                        if (confirm("Are you sure to delete this Comment?")) {
+                          handleDeleteComment(comment.id);
+                        }
+                      }}
+                      className=" rounded-[15px] text-xs bg-red-400 text-white font-bold"
+                    >
+                      Delete
+                    </button>
+                  </div>
                 </div>
               ))}
+              <button
+                onClick={() => {
+                  setShowAddModal(true);
+                }}
+                className="rounded-[15px] text-xs w-full bg-blue-400 text-white font-bold"
+              >
+                Add Comment +
+              </button>
             </div>
           </div>
         </div>
       </div>
+      <AddCommentModal
+        show={showAddModal}
+        handleClose={() => setShowAddModal(false)}
+        submitFunction={(v) => {
+          v.userId = Number(userId);
+          handleCreateComment(v);
+          setShowAddModal(false);
+        }}
+      />
+      <EditCommentModal
+        show={showEditModal}
+        handleClose={() => setShowEditModal(false)}
+        submitFunction={(v) => {
+          v.id = Number(selectedEditItem?.id);
+          v.userId = Number(userId);
+          handleUpdateComment(v);
+          setShowEditModal(false);
+        }}
+        selectedComment={selectedEditItem}
+      />
     </>
   );
 };

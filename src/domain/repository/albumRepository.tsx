@@ -17,6 +17,17 @@ const albumRepository: IAlbumRepository = {
       throw new Error(String(error));
     }
   },
+  getDetailPhotoRepository: async (photoId: number): Promise<IPhoto> => {
+    try {
+      const res: AxiosResponse<IPhoto> = await albumDatasource.getDetailPhoto(
+        photoId
+      );
+      return res.data;
+    } catch (error: any) {
+      console.log(JSON.stringify(error));
+      throw new Error(String(error));
+    }
+  },
   getAllPhotoByAlbumIdRepository: async (
     albumId: number
   ): Promise<IPhoto[]> => {

@@ -9,6 +9,9 @@ const albumDatasource: IAlbumDatasource = {
   getDetailAlbum: (albumId: number): Promise<AxiosResponse<IAlbum>> => {
     return axios.get(`${API_URL}/albums/${albumId}`);
   },
+  getDetailPhoto: (photoId: number): Promise<AxiosResponse<IPhoto>> => {
+    return axios.get(`${API_URL}/photos/${photoId}`);
+  },
   getAllPhotoByAlbumId: (albumId: number): Promise<AxiosResponse<IPhoto[]>> => {
     return axios.get(`${API_URL}/albums/${albumId}/photos`);
   },

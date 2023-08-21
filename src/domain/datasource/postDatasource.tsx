@@ -3,7 +3,9 @@ import { IPost } from "../../_types/posts.type";
 import { IPostDatasource } from "./postDatasource.type";
 import { IComment } from "../../_types/comments.type";
 import {
+  ICreateCommentPayload,
   ICreatePostPayload,
+  IUpdateCommentPayload,
   IUpdatePostPayload,
 } from "../../_types/payload.type";
 
@@ -24,6 +26,19 @@ const postDatasource: IPostDatasource = {
   },
   updatePost: (payload: IUpdatePostPayload): Promise<AxiosResponse<IPost>> => {
     return axios.put(`${API_URL}/posts/${payload.id}`, { ...payload });
+  },
+  deleteCommentById: (commentId: number): Promise<AxiosResponse<IComment>> => {
+    return axios.delete(`${API_URL}/comments/${commentId}`);
+  },
+  createComment: (
+    payload: ICreateCommentPayload
+  ): Promise<AxiosResponse<IComment>> => {
+    return axios.post(`${API_URL}/comments/`, { ...payload });
+  },
+  updateComment: (
+    payload: IUpdateCommentPayload
+  ): Promise<AxiosResponse<IComment>> => {
+    return axios.put(`${API_URL}/comments/${payload.id}`, { ...payload });
   },
 };
 

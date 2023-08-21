@@ -2,7 +2,9 @@
 
 import { IComment } from "../../_types/comments.type";
 import {
+  ICreateCommentPayload,
   ICreatePostPayload,
+  IUpdateCommentPayload,
   IUpdatePostPayload,
 } from "../../_types/payload.type";
 import { IPost } from "../../_types/posts.type";
@@ -57,6 +59,42 @@ const postRepository: IPostRepository = {
   updatePostRepository: async (payload: IUpdatePostPayload): Promise<IPost> => {
     try {
       const res: AxiosResponse<IPost> = await postDatasource.updatePost(
+        payload
+      );
+      return res.data;
+    } catch (error: any) {
+      console.log(JSON.stringify(error));
+      throw new Error(String(error));
+    }
+  },
+  deleteCommentByIdRepository: async (commentId: number): Promise<IComment> => {
+    try {
+      const res: AxiosResponse<IComment> =
+        await postDatasource.deleteCommentById(commentId);
+      return res.data;
+    } catch (error: any) {
+      console.log(JSON.stringify(error));
+      throw new Error(String(error));
+    }
+  },
+  createCommentRepository: async (
+    payload: ICreateCommentPayload
+  ): Promise<IComment> => {
+    try {
+      const res: AxiosResponse<IComment> = await postDatasource.createComment(
+        payload
+      );
+      return res.data;
+    } catch (error: any) {
+      console.log(JSON.stringify(error));
+      throw new Error(String(error));
+    }
+  },
+  updateCommentRepository: async (
+    payload: IUpdateCommentPayload
+  ): Promise<IComment> => {
+    try {
+      const res: AxiosResponse<IComment> = await postDatasource.updateComment(
         payload
       );
       return res.data;

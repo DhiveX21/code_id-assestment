@@ -10,3 +10,13 @@ export interface IUpdatePostPayload {
   userId: number;
   id: number;
 }
+export interface ICreateCommentPayload {
+  body: string;
+  userId: number;
+}
+
+export interface IUpdateCommentPayload {
+  body: string;
+  userId: number;
+  id: number;
+}

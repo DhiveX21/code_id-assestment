@@ -25,7 +25,7 @@ const AlbumDetailPage = () => {
         {photoData?.map((photo: IPhoto, index: number) => (
           <Link
             key={index}
-            to={`/photo/${photo.id}`}
+            to={`photo/${photo.id}`}
             className="user-card w-1/4 aspect-square flex items-center justify-center border-gray-500 border-2 rounded-lg"
           >
             <div className="user-card__wrapper flex flex-col items-center gap-5 p-2">
