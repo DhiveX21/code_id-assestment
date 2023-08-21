@@ -5,6 +5,7 @@ import { toast } from "react-hot-toast";
 import { IPost } from "../_types/posts.type";
 import { IAlbum } from "../_types/albums.type";
 import postService from "../domain/service/postService";
+import { ICreatePostPayload, IUpdatePostPayload } from "../_types/payload.type";
 
 const useUserDetail = () => {
   const [userData, setUserData] = useState<IUser | null>();
@@ -57,6 +58,26 @@ const useUserDetail = () => {
       toast.error(String(error));
     }
   };
+  const handleAddPost = async (payload: ICreatePostPayload) => {
+    try {
+      await postService.createPostService(payload);
+      toast.success(
+        "Success Create, But this is only fake Create from this API"
+      );
+    } catch (error) {
+      toast.error(String(error));
+    }
+  };
+  const handleEditPost = async (payload: IUpdatePostPayload) => {
+    try {
+      await postService.updatePostService(payload);
+      toast.success(
+        "Success Update, But this is only fake Update from this API"
+      );
+    } catch (error) {
+      toast.error(String(error));
+    }
+  };
 
   return {
     getDetailUser,
@@ -66,6 +87,8 @@ const useUserDetail = () => {
     getAlbumByUser,
     albumData,
     handleDeletePost,
+    handleAddPost,
+    handleEditPost,
   };
 };
 

@@ -1,23 +1,34 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 
 import { useForm, SubmitHandler } from "react-hook-form";
+import { IPost } from "../../_types/posts.type";
+import { useEffect } from "react";
 
-const AddPostModal = ({
+const EditPostModal = ({
   show = true,
   submitFunction,
   handleClose,
+  selectedPost,
 }: {
   show: boolean;
   submitFunction: (values: any) => any;
   handleClose: () => any;
+  selectedPost: IPost | null;
 }) => {
   type Inputs = {
     title: string;
     body: string;
   };
-  const { register, handleSubmit } = useForm<Inputs>();
+  const { register, handleSubmit, setValue } = useForm<Inputs>();
 
   const onSubmit: SubmitHandler<Inputs> = (data) => submitFunction(data);
+
+  useEffect(() => {
+    if (selectedPost) {
+      setValue("title", selectedPost?.title);
+      setValue("body", selectedPost?.body);
+    }
+  }, [selectedPost]);
 
   return (
     <>
@@ -71,4 +82,4 @@ const AddPostModal = ({
   );
 };
 
-export default AddPostModal;
+export default EditPostModal;

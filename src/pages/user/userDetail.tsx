@@ -1,12 +1,16 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import useUserDetail from "../../_hooks/useUserDetail";
 import { IPost } from "../../_types/posts.type";
 import { Link } from "react-router-dom";
 import { IAlbum } from "../../_types/albums.type";
 import AddPostModal from "../../components/posts/addPostModal";
+import EditPostModal from "../../components/posts/editPostModal";
 
 const UserDetailPage = () => {
+  const [showAddModal, setShowAddModal] = useState(false);
+  const [showEditModal, setShowEditModal] = useState(false);
+  const [selectedEditItem, setSelectedEditItem] = useState<IPost | null>(null);
   const { userId } = useParams();
   const {
     getDetailUser,
@@ -16,6 +20,8 @@ const UserDetailPage = () => {
     getAlbumByUser,
     albumData,
     handleDeletePost,
+    handleAddPost,
+    handleEditPost,
   } = useUserDetail();
 
   useEffect(() => {
@@ -126,23 +132,32 @@ const UserDetailPage = () => {
                       </div>
                     </div>
                   </Link>
-                  <button
-                    onClick={() => {
-                      if (confirm("Are you sure to delete this post?")) {
-                        handleDeletePost(post.id);
-                      }
-                    }}
-                    className="absolute right-2 top-2 rounded-[15px] text-xs bg-red-400 text-white font-bold"
-                  >
-                    Delete
-                  </button>
+                  <div className="absolute right-2 top-2 flex gap-2">
+                    <button
+                      onClick={() => {
+                        setShowEditModal(true);
+                        setSelectedEditItem(post);
+                      }}
+                      className=" rounded-[15px] text-xs bg-yellow-400 text-white font-bold"
+                    >
+                      Edit
+                    </button>
+                    <button
+                      onClick={() => {
+                        if (confirm("Are you sure to delete this post?")) {
+                          handleDeletePost(post.id);
+                        }
+                      }}
+                      className=" rounded-[15px] text-xs bg-red-400 text-white font-bold"
+                    >
+                      Delete
+                    </button>
+                  </div>
                 </div>
               ))}
               <button
                 onClick={() => {
-                  if (confirm("Are you sure to delete this post?")) {
-                    // handleDeletePost(post.id);
-                  }
+                  setShowAddModal(true);
                 }}
                 className="rounded-[15px] text-xs w-full bg-blue-400 text-white font-bold"
               >
@@ -152,7 +167,26 @@ const UserDetailPage = () => {
           </div>
         </div>
       </div>
-      <AddPostModal />
+      <AddPostModal
+        show={showAddModal}
+        handleClose={() => setShowAddModal(false)}
+        submitFunction={(v) => {
+          v.userId = Number(userId);
+          handleAddPost(v);
+          setShowAddModal(false);
+        }}
+      />
+      <EditPostModal
+        show={showEditModal}
+        handleClose={() => setShowEditModal(false)}
+        submitFunction={(v) => {
+          v.id = Number(selectedEditItem?.id);
+          v.userId = Number(userId);
+          handleEditPost(v);
+          setShowEditModal(false);
+        }}
+        selectedPost={selectedEditItem}
+      />
     </>
   );
 };

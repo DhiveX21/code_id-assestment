@@ -1,6 +1,10 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 
 import { IComment } from "../../_types/comments.type";
+import {
+  ICreatePostPayload,
+  IUpdatePostPayload,
+} from "../../_types/payload.type";
 import { IPost } from "../../_types/posts.type";
 import postDatasource from "../datasource/postDatasource";
 import { IPostRepository } from "./postRepository.type";
@@ -32,6 +36,28 @@ const postRepository: IPostRepository = {
     try {
       const res: AxiosResponse<IPost> = await postDatasource.deletePostById(
         postId
+      );
+      return res.data;
+    } catch (error: any) {
+      console.log(JSON.stringify(error));
+      throw new Error(String(error));
+    }
+  },
+  createPostRepository: async (payload: ICreatePostPayload): Promise<IPost> => {
+    try {
+      const res: AxiosResponse<IPost> = await postDatasource.createPost(
+        payload
+      );
+      return res.data;
+    } catch (error: any) {
+      console.log(JSON.stringify(error));
+      throw new Error(String(error));
+    }
+  },
+  updatePostRepository: async (payload: IUpdatePostPayload): Promise<IPost> => {
+    try {
+      const res: AxiosResponse<IPost> = await postDatasource.updatePost(
+        payload
       );
       return res.data;
     } catch (error: any) {
