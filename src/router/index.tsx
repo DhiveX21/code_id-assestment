@@ -1,14 +1,39 @@
 /* eslint-disable react-refresh/only-export-components */
 import { createBrowserRouter } from "react-router-dom";
-import { lazy } from "react";
+import { lazy, Suspense } from "react";
 import ErrorPage from "../pages/404";
+import LoadingComponent from "../components/loading";
 
 const UserPage = lazy(() => import("../pages"));
+const UserDetailPage = lazy(() => import("../pages/user/userDetail"));
+const PostDetailPage = lazy(() => import("../pages/post/postDetail"));
 
 const router = createBrowserRouter([
   {
     path: "/",
-    element: <UserPage />,
+    element: (
+      <Suspense fallback={<LoadingComponent />}>
+        <UserPage />
+      </Suspense>
+    ),
+    errorElement: <ErrorPage />,
+  },
+  {
+    path: "/user/:userId",
+    element: (
+      <Suspense fallback={<LoadingComponent />}>
+        <UserDetailPage />
+      </Suspense>
+    ),
+    errorElement: <ErrorPage />,
+  },
+  {
+    path: "/user/:userId/post/:postId",
+    element: (
+      <Suspense fallback={<LoadingComponent />}>
+        <PostDetailPage />
+      </Suspense>
+    ),
     errorElement: <ErrorPage />,
   },
 ]);

@@ -23,7 +23,6 @@ const UserPage = () => {
   useEffect(() => {
     getAllUser();
   }, []);
-  console.log(userData);
 
   return (
     <>
