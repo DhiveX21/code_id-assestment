@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import userService from "../domain/service/userService";
 import { IUser } from "../_types/users.type";
 import { toast } from "react-hot-toast";

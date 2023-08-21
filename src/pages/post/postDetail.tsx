@@ -4,6 +4,7 @@ import usePostDetail from "../../_hooks/usePostDetail";
 import { IComment } from "../../_types/comments.type";
 import AddCommentModal from "../../components/comments/addCommentModal";
 import EditCommentModal from "../../components/comments/editCommentModal";
+import BackButton from "../../components/backButton";
 
 const PostDetailPage = () => {
   const [showAddModal, setShowAddModal] = useState(false);
@@ -34,6 +35,7 @@ const PostDetailPage = () => {
       <div className="w-screen bg-gray-100">
         <div className="user-card  w-full px-20 py-10 rounded-lg shadow-md flex items-center justify-center gap-4">
           <div className=" h-full w-2/3 flex flex-col  gap-4">
+            <BackButton link={`/user/${userId}`} />
             <div className="relative flex flex-col items-center rounded-[20px] w-full mx-auto p-4 bg-white bg-clip-border shadow-3xl shadow-shadow-500">
               <div className="relative flex h-32 w-full justify-center rounded-xl bg-cover">
                 <img

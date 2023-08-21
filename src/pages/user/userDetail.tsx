@@ -6,6 +6,7 @@ import { Link } from "react-router-dom";
 import { IAlbum } from "../../_types/albums.type";
 import AddPostModal from "../../components/posts/addPostModal";
 import EditPostModal from "../../components/posts/editPostModal";
+import BackButton from "../../components/backButton";
 
 const UserDetailPage = () => {
   const [showAddModal, setShowAddModal] = useState(false);
@@ -37,6 +38,7 @@ const UserDetailPage = () => {
       <div className="relative w-screen bg-gray-100">
         <div className="user-card  w-full px-20 py-10 rounded-lg shadow-md flex gap-4">
           <div className=" h-full w-1/3 flex flex-col gap-4">
+            <BackButton link="/" />
             <div className="relative flex flex-col items-center rounded-[20px] w-full mx-auto p-4 bg-white bg-clip-border shadow-3xl shadow-shadow-500">
               <div className="relative flex h-32 w-full justify-center rounded-xl bg-cover">
                 <img

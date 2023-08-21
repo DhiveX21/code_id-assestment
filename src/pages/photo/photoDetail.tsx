@@ -1,9 +1,10 @@
 import { useEffect } from "react";
 import { useParams } from "react-router-dom";
 import usePhotoDetail from "../../_hooks/usePhotoDetail";
+import BackButton from "../../components/backButton";
 
 const PhotoDetailPage = () => {
-  const { photoId } = useParams();
+  const { photoId, userId, albumId } = useParams();
   const { getDetailPhoto, photoData } = usePhotoDetail();
 
   useEffect(() => {
@@ -21,6 +22,9 @@ const PhotoDetailPage = () => {
         <picture>
           <img src={photoData?.url} alt="Photo Detail" />
         </picture>
+      </div>
+      <div className="flex justify-center mt-4">
+        <BackButton link={`/user/${userId}/album/${albumId}`} />
       </div>
     </>
   );

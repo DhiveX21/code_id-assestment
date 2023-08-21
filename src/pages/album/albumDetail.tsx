@@ -3,9 +3,10 @@ import { useParams, Link } from "react-router-dom";
 
 import { IPhoto } from "../../_types/albums.type";
 import useAlbumDetail from "../../_hooks/useAlbumDetail";
+import BackButton from "../../components/backButton";
 
 const AlbumDetailPage = () => {
-  const { albumId } = useParams();
+  const { albumId, userId } = useParams();
   const { albumData, getDetailAlbum, getAllPhotoByAlbum, photoData } =
     useAlbumDetail();
 
@@ -18,6 +19,9 @@ const AlbumDetailPage = () => {
 
   return (
     <>
+      <div className="flex justify-center mt-4">
+        <BackButton link={`/user/${userId}`} />
+      </div>
       <h2 className="w-screen text-center font-bold text-4xl my-4 text-blue-400">
         {albumData?.title}
       </h2>
